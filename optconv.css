@@ -20,7 +20,7 @@ form > * {
 }
 
 #input {
-	width:50%;
+	width:100%;
 	text-align: center;
 	font-size: 42px;
     box-sizing: border-box;
