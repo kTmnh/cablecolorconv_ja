@@ -1,8 +1,19 @@
-/* 8芯ケーブル光ファイバー線番（日本）変換器
- * かなり昔に作ったものをモダンなJavaScriptで再実装
+/* Fiber number to color code converter for Japanese ribbon slotted optical fiber cable.
+ * 
+ * Copyright (c) 2013 Katsumasa Tamanaha
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 (function () {
-		//色名, 背景色, 文字色
+		//colorname (in ja), background-color, text-color
 	var BLUE = ["青", "#00f", "#fff"],
 		YELLOW = ["黄", "#ff0", "#000"],
 		GREEN = ["緑", "#0f0", "#000"],
@@ -12,25 +23,21 @@
 		WHITE = ["白", "#fff", "#000"],
 		AQUA = ["水", "#0ff", "#000"],
 		BROWN = ["茶", "#c00", "#fff"],
-		//フォーム
-		form,
-		//入力フィールド
+		//DOM Elements
 		inputField,
-		//送信ボタン
 		submitButton,
-		//色を表示するElement
+		//Tape table elements
 		box1, box2, box3, box4, box5, box6, box7, box8,
-		//線番を表示するElement
 		outputNumber,
-		//スロット番号・テープ番号・線番を表示するElement
+		//Elements for displaying slot number, tape number, and number in tape.
 		slotTapeNumber;
-		
-	//onloadイベントでセットアップを実行
+	//Execute setup function on load event.
 	window.onload = function() {
 		setup();
 	}
+	//Initial setup
 	function setup() {
-		//Elementを取得
+		//Get DOM Elements
 		inputField = document.getElementById("input");
 		submitButton = document.getElementById("submit_button");
 		box1 = document.getElementById("box1");
@@ -43,39 +50,38 @@
 		box8 = document.getElementById("box8");
 		outputNumber = document.getElementById("output_number");
 		slotTapeNumber = document.getElementById("slot_tape_number");
-		//テーブルの初期化
+		//Set default colors for tape table.
 		setDefault();
-		//イベントの貼付け
-		inputField.addEventListener("mousedown", function() {
+		//Attach event handlers for elements.
+		inputField.onmousedown = function() {
 			this.value = "";
-		}, false);
-		inputField.addEventListener("touchstart", function() {
+		};
+		inputField.ontouchstart = function() {
 			this.value = "";
 			this.focus();
-		}, false);
-		submitButton.addEventListener("click", convert, false);
+		};
+		submitButton.onclick = convert;
 	}
-	//値を変換してHTMLへ出力
+	//Convert and output color table from input.
 	function convert() {
-			//入力値
 		var input,
-			//スロット番号
 			slot,
-			//スロット内での線番
 			inSlotNumber,
-			//テープ番号
 			tape,
-			//テープ内での線番
 			inTapeNumber;
-		//入力された値を整数で取得（文字列などは0として取得）
+		//Get input value in an integer (| 0).
 		input = inputField.value | 0;
-		//値が1未満だったら、値を1にする
+		//Set input value to 1 if less than 1.
 		input = (input < 1) ? 1 : input;
+		//Get slot number from input value.
 		slot = inputToSlot(input);
+		//Get in slot number from input.
 		inSlotNumber = inputToInSlotNumber(input);
+		//Get tape number from in slot number.
 		tape = inSlotNumberToTape(inSlotNumber);
+		//Get in tape number from in slot number.
 		inTapeNumber = inSlotNumberToInTapeNumber(inSlotNumber);
-		//テープの色を設定
+		//Set colors 
 		setTapeColor(tape);
 		outputNumber.innerHTML = "#" + input;
 		slotTapeNumber.innerHTML = slot + "S " + tape + "T " + "#" + inTapeNumber;

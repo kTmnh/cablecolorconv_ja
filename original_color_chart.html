@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>カラーチャート</title>
+	<style>
+		* {
+			margin:0;
+			padding:0;
+		}
+		table {
+			max-width:768px;
+			width:100%;
+			border:1px solid #000;
+			font-weight:bold;
+		}
+		td {
+			text-align:center;
+			border:1px solid #000;
+		}
+		.blue {
+			background-color:#00f;
+			color:#fff;
+		}
+		.yellow {
+			background-color:#ff0;
+			color:#000;
+		}
+		.green {
+			background-color:#0f0;
+			color:#000;
+		}
+		.red {
+			background-color:#f00;
+			color:#000;
+		}
+		.purple {
+			background-color:#f0f;
+			color:#000;
+		}
+		.pink {
+			background-color:#f9c;
+			color:#000;
+		}
+		.white {
+			background-color:#fff;
+			color:#000;
+		}
+		.aqua {
+			background-color:#0ff;
+			color:#000;
+		}
+		.brown {
+			background-color:#c00;
+			color:#fff;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload = function() {
+			var template = document.getElementById("template").innerHTML;
+			var table = document.getElementsByTagName("tbody")[0];
+			var tapeCounter = 0;
+			var endTapeNumber = 0;
+			for (var i = 0; i < 10; i ++) {
+				table.innerHTML += template;
+				for (var j = 0; j < 8; j ++) {
+					var currentCell = table.children[i].children[j];
+					var number = (i * 8) + j + 1;
+					var colorNumber = number % 20;
+					var endColorNumber = number % 4;
+					table.children[i].children[j].innerHTML = number;
+					switch (colorNumber) {
+						case 1:
+							currentCell.setAttribute("class", "blue");
+							break;
+						case 5:
+							currentCell.setAttribute("class", "yellow");
+							break;
+						case 9:
+							currentCell.setAttribute("class", "green");
+							break;
+						case 13:
+							currentCell.setAttribute("class", "red");
+							break;
+						case 17:
+							currentCell.setAttribute("class", "purple");
+							break;
+					}
+					if (endColorNumber == 0) {
+						tapeCounter += 1;
+						switch (endTapeNumber) {
+							case 0:
+								currentCell.setAttribute("class", "pink");
+								break;
+							case 1:
+								currentCell.setAttribute("class", "white");
+								break;
+							case 2:
+								currentCell.setAttribute("class", "aqua");
+								break;
+							case 3:
+								currentCell.setAttribute("class", "brown");
+								break;
+						}
+						if (tapeCounter % 5 == 0) {
+							endTapeNumber += 1;
+						}
+					}
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<table cellpadding="0" cellspacing="0">
+		<tbody></tbody>
+	</table>
+	<script type="text/x-template" id="template">
+		<tr>
+			<td></td>
+			<td class="white"></td>
+			<td class="white"></td>
+			<td></td>
+			<td></td>
+			<td class="white"></td>
+			<td class="white"></td>
+			<td></td>
+		</tr>
+	</script>
+</body>
+</html>
