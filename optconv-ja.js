@@ -90,25 +90,25 @@
 		}
 		eval("box"+inTapeNumber).style.borderColor = "#f00";
 	}
-	//線番をスロット番号に変換する
+	//Convert input number into slot number
 	function inputToSlot(number) {
+		//Each slot has 10 tapes
 		return Math.ceil(number / 80);
 	}
-	//線番からスロットの中での番号を出す
+	//Convert input number into a number in slot
 	function inputToInSlotNumber(number) {
 		var temp = number % 80;
 		if (temp != 0) {
 			return temp;
-		//余りが出ない＝入力値が80の倍数の場合は80を返す
 		} else {
 			return 80;
 		}
 	}
-	//スロットの中での番号をテープ番号に変換する
+	//Convert in slot number into tape number
 	function inSlotNumberToTape(number) {
 		return Math.ceil(number / 8);
 	}
-	//スロット内での番号をテープ内での番号に変換する
+	//Convert in slot number into in tape number
 	function inSlotNumberToInTapeNumber(number) {
 		var temp = number % 8;
 		if (temp != 0) {
@@ -117,9 +117,9 @@
 			return 8;
 		}
 	}
-	//テープの色の初期化
+	//Set default color set.
 	function setDefault() {
-		//青白白桃黄白白桃に設定
+		//Numbers of box 2,3,6,7 are always white
 		box1.innerHTML = BLUE[0];
 		box2.innerHTML = box3.innerHTML = WHITE[0];
 		box4.innerHTML = PINK[0];
@@ -139,8 +139,8 @@
 		box6.style.color = box7.style.color = WHITE[2];
 		box8.style.color = PINK[2];
 	}
-	//各ボックスに色を設定する
-	//引数： 色の配列
+	//Set each box's color
+	//Arg: color variables for box 1,4,5,8
 	function setBoxColor(color1, color4, color5, color8) {
 		box1.innerHTML = color1[0];
 		box4.innerHTML = color4[0];
@@ -155,7 +155,7 @@
 		box5.style.color = color5[2];
 		box8.style.color = color8[2];
 	}
-	//上のメソッドを使って、テープ番号に従ってテープの色を設定する
+	//Set tape color from tape number
 	function setTapeColor(tape) {
 		switch (tape) {
 			case 1:
